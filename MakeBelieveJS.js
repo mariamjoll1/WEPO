@@ -1,3 +1,4 @@
+
 (function (globalObj) {
   function MakeBelieveElement(nodes) {
     // this is this instance of MakeBelieveElement
@@ -18,6 +19,17 @@
     return tagNames
   }
 
+  MakeBelieveElement.prototype.parent = function() {
+    var parentNodes = [];
+    for (var i = 0; i < this.nodes.length; i++) {
+      var currElement = this.nodes[i];
+      console.log('curr element is ' + currElement);
+      console.log('parent of curr element is ' + currElement.parentNodes);
+// parentNodes.push(currElement.parentNodes)
+    }
+
+  }
+
   function query(cssSelector) {
     // get items
     var items = document.querySelectorAll(cssSelector);
@@ -29,3 +41,5 @@
 
 var paragraphs = __('p');
 console.log(paragraphs);
+
+var parent_nodes = paragraphs.parent();
