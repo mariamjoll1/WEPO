@@ -39,32 +39,45 @@
 
     MakeBelieveElement.prototype.parent = function(selector = null) {
         var parent = this.ancestryHelper(this.nodes, selector);
-
-        return parent;
+        if(parent[0] == null){
+            return [];
+        }
+        else{
+            return parent;
+        }
     }
 
     MakeBelieveElement.prototype.grandParent = function(selector = null) {
         var parent = this.ancestryHelper(this.nodes);
         var grandParent = this.ancestryHelper(parent, selector);
         
-        return grandParent;
+        if(grandParent[0] == null){
+            return [];
+        }
+        else{
+            return grandParent;
+        }
     }
 
-   /* MakeBelieveElement.prototype.ancestor = function(selector) {
+    MakeBelieveElement.prototype.ancestor = function(selector) {
         var parents = this.ancestryHelper(this.nodes);
-        var grandparents = this.ancestryHelper(parents);
-        var ancestors = [];
+        var grandParents = this.ancestryHelper(parents);
+        var ancestors = null;
         var currentElement = [];
 
-        for (var i = 0; i < grandparents.length; i++){
+        for (var i = 0; i < grandParents.length; i++){
+            currentElement = grandParents[i];
             while(currentElement.parentElement !== null){
-                
+                if(currentElement.parentElement.matches(selector)){
+                    if(ancestors == null){
+                        return currentElement.parentElement;
+                    }
+                }
+                currentElement = currentElement.parentElement;
             }
         }
-
-
-
-    }*/
+        return [];
+    }
 
     function query(cssSelector) {
         var items = document.querySelectorAll(cssSelector);
@@ -78,8 +91,9 @@
 
 var paragraphs = __('p').getLength();
 var divs = __('.item');
-var parentThing = __('div').parent();
+var parentThing = __('html').parent();
 var grandParents = __('.test2').grandParent();
+var ancestor = __('.test2').ancestor('.dabba');
 
 
 
