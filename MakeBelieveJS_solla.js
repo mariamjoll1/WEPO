@@ -31,6 +31,8 @@
   MakeBelieveElement.prototype.append = function(arg) {
     if (typeof arg == 'object') {
       arg = '<' + this.nodes[0].tagName + '>' + arg.data + '</' + this.nodes[0].tagName + '>'
+      var new_arg = arg.cloneNode(true)
+      console.log(arg.tag)
     }
     this.nodes[0].insertAdjacentHTML('beforeend', arg)
     console.log(this.nodes[0]);
@@ -49,7 +51,6 @@
   // section 14
 
 
-
   function query(cssSelector) {
     // get items
     var items = document.querySelectorAll(cssSelector);
@@ -60,7 +61,7 @@
 })(window);
 
 
-var classThird = __('.third');
+var classThird = __('.item-1');
 classThird.append('<p>Testery</p>');
 classThird.append(
   document.createElement('p')
