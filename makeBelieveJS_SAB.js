@@ -1,6 +1,13 @@
 
 (function (globalObj){
-
+//2.
+    function query(cssSelector) {
+        var items = document.querySelectorAll(cssSelector);
+        return new MakeBelieveElement(items);
+    }
+//1.
+    globalObj.__ = query;
+//3.
     function MakeBelieveElement(nodes) {
 
         this.nodes = nodes;
@@ -19,7 +26,7 @@
         }
         return tagNames;
     }
-
+//Used in 4/5/6
     MakeBelieveElement.prototype.ancestryHelper = function(node, selector = null) {
         var parent = [];
         var currentElement = node;
@@ -36,17 +43,17 @@
         }
         return parent;
     }
-
+//4.
     MakeBelieveElement.prototype.parent = function(selector = null) {
         var parent = this.ancestryHelper(this.nodes, selector);
         if(parent[0] == null){
             return [];
         }
         else{
-            return parent;
+            return new MakeBelieveElement(parent);
         }
     }
-
+//5.
     MakeBelieveElement.prototype.grandParent = function(selector = null) {
         var parent = this.ancestryHelper(this.nodes);
         var grandParent = this.ancestryHelper(parent, selector);
@@ -55,10 +62,10 @@
             return [];
         }
         else{
-            return grandParent;
+            return new MakeBelieveElement(grandParent);
         }
     }
-
+//6.
     MakeBelieveElement.prototype.ancestor = function(selector) {
         var parents = this.ancestryHelper(this.nodes);
         var grandParents = this.ancestryHelper(parents);
@@ -70,7 +77,7 @@
             while(currentElement.parentElement !== null){
                 if(currentElement.parentElement.matches(selector)){
                     if(ancestors == null){
-                        return currentElement.parentElement;
+                        return new MakeBelieveElement(currentElement.parentElement);
                     }
                 }
                 currentElement = currentElement.parentElement;
@@ -78,22 +85,32 @@
         }
         return [];
     }
-
-    function query(cssSelector) {
-        var items = document.querySelectorAll(cssSelector);
-        return new MakeBelieveElement(items);
+//7.
+    MakeBelieveElement.prototype.onClick = function(theFunction) {
+        for(var i = 0; i < this.nodes.length; i++){
+            this.nodes[i].addEventListener('click', theFunction, false);
+        }
     }
-
-    globalObj.__ = query;
+//8.
+    MakeBelieveElement.prototype.insertText = function(string) {
+        for(var i = 0; i < this.nodes.length; i++){
+            this.nodes[i].innerHTML = string;
+        }
+    }
     
 
 })(window);
 
-var paragraphs = __('p').getLength();
+/*var paragraphs = __('p').getLength();
 var divs = __('.item');
-var parentThing = __('html').parent();
+var parentThing = __('div').parent();
 var grandParents = __('.test2').grandParent();
-var ancestor = __('.test2').ancestor('.dabba');
-
+var ancestor = __('.test2').ancestor('.item');
+__('body').parent().onClick(function (evt) {
+    console.log('clicked');
+});
+console.log(parentThing);
+console.log(__('p'));
+__('p').insertText('Bobby, Bobby');*/
 
 
