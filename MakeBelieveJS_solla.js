@@ -23,12 +23,32 @@
     var parentNodes = [];
     for (var i = 0; i < this.nodes.length; i++) {
       var currElement = this.nodes[i];
-      console.log('curr element is ' + currElement);
-      console.log('parent of curr element is ' + currElement.parentNodes);
-// parentNodes.push(currElement.parentNodes)
     }
-
   }
+
+  // section 9
+
+  MakeBelieveElement.prototype.append = function(arg) {
+    if (typeof arg == 'object') {
+      arg = '<' + this.nodes[0].tagName + '>' + arg.data + '</' + this.nodes[0].tagName + '>'
+    }
+    this.nodes[0].insertAdjacentHTML('beforeend', arg)
+    console.log(this.nodes[0]);
+  }
+
+  // section 10
+
+  MakeBelieveElement.prototype.prepend = function(arg) {
+    if (typeof arg == 'object') {
+      arg = '<' + this.nodes[0].tagName + '>' + arg.data + '</' + this.nodes[0].tagName + '>'
+    }
+    this.nodes[0].insertAdjacentHTML('afterbegin', arg)
+    console.log(this.nodes[0]);
+  }
+
+  // section 14
+
+  
 
   function query(cssSelector) {
     // get items
@@ -39,7 +59,12 @@
   globalObj.__ = query;
 })(window);
 
-var paragraphs = __('p');
-console.log(paragraphs);
 
-var parent_nodes = paragraphs.parent();
+var classThird = __('.third');
+classThird.append('<p>Testery</p>');
+classThird.append(
+  document.createElement('p')
+  .appendChild(
+    document.createTextNode('Im a text node')
+  )
+)

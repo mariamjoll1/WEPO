@@ -46,7 +46,7 @@
     MakeBelieveElement.prototype.grandParent = function(selector = null) {
         var parent = this.ancestryHelper(this.nodes);
         var grandParent = this.ancestryHelper(parent, selector);
-        
+
         return grandParent;
     }
 
@@ -58,7 +58,7 @@
 
         for (var i = 0; i < grandparents.length; i++){
             while(currentElement.parentElement !== null){
-                
+
             }
         }
 
@@ -72,14 +72,11 @@
     }
 
     globalObj.__ = query;
-    
+
 
 })(window);
 
-var paragraphs = __('p').getLength();
-var divs = __('.item');
-var parentThing = __('div').parent();
-var grandParents = __('.test2').grandParent();
-
-
-
+// var paragraphs = __('p').getLength();
+// var divs = __('.item');
+// var parentThing = __('div').parent();
+// var grandParents = __('.test2').grandParent();
