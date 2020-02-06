@@ -29,27 +29,37 @@
   // section 9
 
   MakeBelieveElement.prototype.append = function(arg) {
-    if (typeof arg == 'object') {
-      arg = '<' + this.nodes[0].tagName + '>' + arg.data + '</' + this.nodes[0].tagName + '>'
-      var new_arg = arg.cloneNode(true)
-      console.log(arg.tag)
+    for (var i = 0; i < this.nodes.length; i++) {
+      if (typeof arg == 'object') {
+        arg = '<' + arg.tagName + '>' + arg.data + '</' + arg.tagName + '>'
+      }
+      this.nodes[i].insertAdjacentHTML('afterend', arg)
     }
-    this.nodes[0].insertAdjacentHTML('beforeend', arg)
-    console.log(this.nodes[0]);
   }
 
   // section 10
 
   MakeBelieveElement.prototype.prepend = function(arg) {
-    if (typeof arg == 'object') {
-      arg = '<' + this.nodes[0].tagName + '>' + arg.data + '</' + this.nodes[0].tagName + '>'
+    console.log(arg.parentNode);
+    for (var i = 0; i < this.nodes.length; i++) {
+      if (typeof arg == 'object') {
+        arg = arg.parentNode.outerHTML
+      }
+      this.nodes[i].insertAdjacentHTML('beforebegin', arg)
     }
-    this.nodes[0].insertAdjacentHTML('afterbegin', arg)
-    console.log(this.nodes[0]);
   }
 
   // section 14
-
+  MakeBelieveElement.prototype.toggleClass = function(arg) {
+    for (var i = 0; i < this.nodes.length; i++) {
+      if (this.nodes[i].className == arg) {
+        this.nodes[i].className = ""
+      }
+      else {
+        this.nodes[i].className = arg
+      }
+    }
+  }
 
   function query(cssSelector) {
     // get items
@@ -62,10 +72,13 @@
 
 
 var classThird = __('.item-1');
-classThird.append('<p>Testery</p>');
-classThird.append(
+
+classThird.prepend('<p>Testery</p>');
+__('p').prepend(
   document.createElement('p')
   .appendChild(
     document.createTextNode('Im a text node')
   )
 )
+
+__('p').toggleClass('SomeClass')
